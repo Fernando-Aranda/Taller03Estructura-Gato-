@@ -8,12 +8,12 @@ void IA::init(int aiPlayer) {
 }
 
 void IA::accionMover(Tablero& board) {
-	moverIA bestMove = getBestMove(board, _JugadorIA);
+	moverIA bestMove = mejorMovimiento(board, _JugadorIA);
 	board.setVal(bestMove.x, bestMove.y, _JugadorIA);
 }
 
 
-moverIA IA::getBestMove(Tablero& board, int player, int depth /* = 0*/)
+moverIA IA::mejorMovimiento(Tablero& board, int player, int depth /* = 0*/)
 {
 	int retv = board.chequearVictoria();
 
@@ -48,7 +48,7 @@ moverIA IA::getBestMove(Tablero& board, int player, int depth /* = 0*/)
 				board.setVal(x, y, player);
 
 				// verificar si es un buen movimiento
-				move.puntaje = getBestMove(board, player == _JugadorIA ? _JugadorHumano : _JugadorIA, depth).puntaje;
+				move.puntaje = mejorMovimiento(board, player == _JugadorIA ? _JugadorHumano : _JugadorIA, depth).puntaje;
 
 				moves.push_back(move);
 

@@ -19,7 +19,7 @@ public:
     void accionMover(Tablero& board);
 private:
 
-	moverIA getBestMove(Tablero& board, int jugador, int profundidad = 0);
+	moverIA mejorMovimiento(Tablero& board, int jugador, int profundidad = 0);
 
     int _JugadorIA; ///< Índice de la IA
     int _JugadorHumano; ///< Índice del jugador humano
