@@ -104,6 +104,156 @@ y les asigna puntuaciones.
 mejor opción a largo plazo.
 
 ---
+## Explicación sobre el algoritmo utilizado (Minimax con poda alfa-beta)
+En el código proporcionado, se implementa un algoritmo Minimax con poda alfa
+-beta para tomar decisiones en un juego de gato, en el que una IA juega contra un 
+humano. El algoritmo Minimax es utilizado para predecir los mejores movimientos, 
+evaluando las posibles jugadas a lo largo del juego y eligiendo la más favorable 
+para el jugador controlado por la IA.
+### Proceso del algoritmo Minimax:
+1. Objetivo: El objetivo principal del algoritmo es maximizar la puntuación de la 
+IA mientras minimiza la puntuación del oponente (humano). Se considera que cada 
+jugada tiene una "puntuación" que refleja su calidad, y el Minimax evalúa todos 
+los posibles movimientos futuros para seleccionar el mejor.
+
+2. Minimax: El algoritmo explora todos los posibles movimientos del tablero, 
+creando un árbol de decisiones donde cada nodo representa un estado del tablero. 
+Los nodos son evaluados y los movimientos son "maximizados" si le corresponde al 
+jugador IA y "minimizados" si le corresponde al jugador humano.
+
+3. Poda Alfa-Beta: La poda alfa-beta es una optimización del algoritmo Minimax 
+que mejora su eficiencia. En lugar de explorar todos los posibles movimientos, 
+alfa-beta permite descartar ramas del árbol de decisiones que no afectan al 
+resultado final, ahorrando tiempo de cómputo.
+
+   - Alfa es el valor máximo que el jugador IA puede obtener en cualquier 
+   punto dado.
+   - Beta es el valor mínimo que el jugador humano puede obtener.
+   -Si en algún momento se detecta que un jugador no puede obtener un 
+   resultado mejor que el valor de alfa o beta (es decir, que el nodo no puede 
+   influir en la decisión final), esa rama del árbol de juego se "podará" 
+   (no se explora más).
+
+4. Recursividad: La función getBestMove es recursiva. En cada nivel del árbol de 
+juego, se llama a sí misma con un estado del tablero actualizado, 
+alternando entre maximizar y minimizar las puntuaciones dependiendo 
+de si es el turno de la IA o el humano.
+
+5. Evaluación: Cada posible movimiento se evalúa con una puntuación:
+
+    - Si la IA gana, se devuelve un valor alto (10 menos la profundidad del nodo).
+    - Si el humano gana, se devuelve un valor bajo (profundidad negativa -10).
+    - Si el juego empata, el valor es 0.
+
+La evaluación se realiza de manera recursiva para todos los 
+posibles movimientos hasta alcanzar el final del juego (victoria, derrota o empate).
+
+---
+## Explicación teórica del algoritmo Minimax y la poda alfa-beta
+### Algoritmo Minimax:
+El algoritmo Minimax es una técnica utilizada en la toma de 
+decisiones en teoría de juegos, especialmente en juegos de dos jugadores con 
+información perfecta, como el ajedrez, las damas y el gato. 
+El objetivo es que un jugador (en este caso, la IA) maximice su
+puntuación mientras que el oponente (el jugador humano) trata de 
+minimizar la puntuación de la IA.
+
+- Maximización: Cuando es el turno de la IA, el algoritmo 
+intenta maximizar la puntuación (es decir, encontrar el mejor movimiento para la IA).
+- Minimización: Cuando es el turno del jugador humano, el 
+algoritmo trata de minimizar la puntuación de la IA 
+(es decir, encontrar el movimiento que le cause más daño a la IA).
+
+### Poda Alfa-Beta:
+La poda alfa-beta es una mejora del algoritmo Minimax que reduce el 
+número de nodos evaluados al eliminar las ramas del árbol de juego 
+que no pueden afectar el resultado final. Esto mejora la eficiencia 
+del algoritmo de forma considerable.
+
+- Alfa: Es el mejor valor encontrado hasta el momento en el lado 
+"maximizador" del árbol (es decir, la IA). Si una rama encuentra un valor 
+menor que alfa, no es necesario explorar más esa rama.
+- Beta: Es el mejor valor encontrado hasta el momento en el lado "minimizador" 
+del árbol (es decir, el jugador humano). Si una rama encuentra un valor mayor 
+que beta, no es necesario explorar más esa rama.
+
+La poda alfa-beta mantiene los mismos resultados que el algoritmo Minimax 
+pero con una menor cantidad de nodos evaluados, lo que mejora el rendimiento de
+manera significativa.
+
+---
+## Diagrama del árbol de juego para un caso simple (ejemplo: primeros 3 movimientos)
+
+Para ilustrar cómo funciona el algoritmo Minimax, consideremos un caso simple con 
+un tablero de 3x3. Supongamos que el jugador IA es "X" y el jugador humano es "O".
+### Paso 1: Estado inicial (Tablero vacío):
+      |   |
+    -----------
+      |   |
+    -----------
+      |   |
+
+El jugador IA (X) comienza, y el algoritmo evalúa todas las posibles jugadas.
+
+### Paso 2: Jugada del jugador IA (X):
+El jugador IA elige una casilla, por ejemplo, la casilla central (1,1). El árbol 
+de decisiones se expande con todos los posibles movimientos del jugador humano(O) 
+para cada una de las jugadas posibles del jugador IA.
+
+    X |   |
+    -----------
+      | X |   
+    -----------
+      |   |   
+
+### Paso 3: Jugada del jugador humano (O):
+El jugador humano (O) elige una casilla, por ejemplo, (0,0).
+ 
+    X | O |
+    -----------
+      | X |   
+    -----------
+      |   |   
+El árbol de juego continúa creciendo en este proceso.
+
+### Árbol de juego (simplificado):
+           [X] 
+           /   \
+       [O]     [O]
+       / \      / \
+     [X] [X]  [X] [X]
+     /  \     /    \
+    [O] [O]  [O]    [O]
+
+Este árbol muestra las posibles jugadas para los primeros dos movimientos 
+(IA, humano, IA). A medida que el árbol crece, el algoritmo Minimax explora 
+todas las ramas posibles y evalúa los resultados utilizando la función de 
+evaluación.
+
+---
+## Análisis de complejidad temporal del algoritmo
+### Antes de aplicar poda alfa-beta:
+La complejidad temporal del algoritmo Minimax sin poda alfa-beta es O(b^d), donde:
+
+- b es el factor de ramificación (el número promedio de movimientos posibles en
+cada estado del juego).
+- d es la profundidad del árbol de juego (el número de movimientos que se evalúan 
+hacia adelante).
+En el caso de un juego como el gato, si se consideraran todas las posibles 
+jugadas, la complejidad sería mucho mayor, dado que el número de movimientos 
+posibles crece exponencialmente con la profundidad.
+
+### Después de aplicar poda alfa-beta:
+La poda alfa-beta puede reducir la complejidad en gran medida, mejorando la 
+eficiencia. En el mejor de los casos, la complejidad se reduce a O(b^(d/2)), 
+lo que significa que la poda alfa-beta puede hacer que el algoritmo funcione mucho 
+más rápido, evaluando significativamente menos nodos.
+
+La mejora en la eficiencia depende en gran medida de cómo se ordenan las jugadas, 
+ya que una mejor selección de movimientos puede llevar a podar más ramas, 
+aumentando aún más la velocidad del algoritmo.
+
+---
 ## Conclusión
 Este código permite simular un juego de Gato con un jugador humano y una IA basada 
 en el algoritmo Minimax. La IA toma decisiones óptimas al evaluar todos los 
