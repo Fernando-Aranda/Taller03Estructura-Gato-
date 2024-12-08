@@ -204,7 +204,7 @@ Supongamos que el juego ya está avanzado y la IA tiene 3 posibles jugadas con d
        | X | O
 Luego de ejecutar el movimiento chequearemos el puntaje, si es una victoria (3 X en fila o columna) obtendremos 10 de puntaje (maximizar).
 
-### Opción 2: Movimiento IA - X [2,2]
+### Opción 2: Movimiento IA - X [3,2]
 
 
      O | X | X
