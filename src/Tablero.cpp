@@ -1,8 +1,8 @@
 #include "../include/Tablero.h"
 #include <string>
 
-// Valores posibles de la casilla: NO_VAL, X_VAL, O_VAL
-const char GLYPHS[3] = { ' ', 'X', 'O' };
+// Valores posibles de la casilla: ValorNo, ValorX, ValorO
+const char Simbolos[3] = { ' ', 'X', 'O' };
 
 void Tablero::init(int size) {
     // Limita el tamaño a 9 ya que tenemos espacio limitado en la consola
@@ -41,7 +41,7 @@ void Tablero::imprimir() const {
 
         // Recorrer las columnas y agregar el glifo (X o O)
         for (int x = 0; x < _size; x++) {
-            text += " " + std::string(1, GLYPHS[getValor(x, y)]) + " ";
+            text += " " + std::string(1, Simbolos[getValor(x, y)]) + " ";
             text += "|";
         }
 
