@@ -110,3 +110,10 @@ en el algoritmo Minimax. La IA toma decisiones óptimas al evaluar todos los
 posibles movimientos y garantizar la victoria o minimizar la derrota. 
 El código proporciona una buena base para la simulación de juegos y la 
 implementación de algoritmos de búsqueda en árboles.
+
+---
+## Instalación y Uso
+- g++ src/main.cpp src/JuegoPrincipal.cpp src/IA.cpp src/Tablero.cpp -o main/main_executable
+
+
+- ./main/main_executable
