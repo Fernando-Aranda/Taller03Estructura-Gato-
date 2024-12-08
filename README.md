@@ -182,53 +182,66 @@ pero con una menor cantidad de nodos evaluados, lo que mejora el rendimiento de
 manera significativa.
 
 ---
-## Diagrama del árbol de juego para un caso simple (ejemplo: primeros 3 movimientos)
+## Diagrama del árbol de juego para un caso simple
 
-Para ilustrar cómo funciona el algoritmo Minimax, consideremos un caso simple con 
-un tablero de 3x3. Supongamos que el jugador IA es "X" y el jugador humano es "O".
-### Paso 1: Estado inicial (Tablero vacío):
-      |   |
+En este ejemplo, supongamos que la IA es el jugador X y el humano es el jugador O. El algoritmo evaluará las jugadas de la IA (maximizar) y las del humano (minimizar) en cada nivel del árbol.
+### Estado actual:
+
+     O | X | X
     -----------
-      |   |
+     O |   |
     -----------
-      |   |
+       | X | O
 
-El jugador IA (X) comienza, y el algoritmo evalúa todas las posibles jugadas.
+Supongamos que el juego ya está avanzado y la IA tiene 3 posibles jugadas con diferentes puntajes.
 
-### Paso 2: Jugada del jugador IA (X):
-El jugador IA elige una casilla, por ejemplo, la casilla central (1,1). El árbol 
-de decisiones se expande con todos los posibles movimientos del jugador humano(O) 
-para cada una de las jugadas posibles del jugador IA.
+### Opción 1: Movimiento IA - X [2,2] 
 
-    X |   |
+     O | X | X
     -----------
-      | X |   
+     O | X |
     -----------
-      |   |   
+       | X | O
+Luego de ejecutar el movimiento chequearemos el puntaje, si es una victoria (3 X en fila o columna) obtendremos 10 de puntaje (maximizar).
 
-### Paso 3: Jugada del jugador humano (O):
-El jugador humano (O) elige una casilla, por ejemplo, (0,0).
- 
-    X | O |
+### Opción 2: Movimiento IA - X [2,2]
+
+
+     O | X | X
     -----------
-      | X |   
+     O |   | X
     -----------
-      |   |   
-El árbol de juego continúa creciendo en este proceso.
+       | X | O
 
-### Árbol de juego (simplificado):
-           [X] 
-           /   \
-       [O]     [O]
-       / \      / \
-     [X] [X]  [X] [X]
-     /  \     /    \
-    [O] [O]  [O]    [O]
+No se obtiene puntaje, ya que no se consigue nada, así que se vuelve a llamar recursivamente el algoritmo min-max, lo que simulalas jugadas del jugador "O", en donde tiene una victoria con cualquier movimiento, por lo cual se obtiene -10 al puntaje.
 
-Este árbol muestra las posibles jugadas para los primeros dos movimientos 
-(IA, humano, IA). A medida que el árbol crece, el algoritmo Minimax explora 
-todas las ramas posibles y evalúa los resultados utilizando la función de 
-evaluación.
+### Opción 3: Movimiento IA - X [1,3]
+
+     O | X | X
+    -----------
+     O |   |
+    -----------
+     X | X | O
+
+Volvemos a hacer la recursión, ya que no se obtiene puntaje, en donde es posible la victoria del jugador "O", por lo que el puntaje es -10.
+
+### Árbol de juego:
+                    [O|X|X] 
+                    [O| | ]
+                    [ |X|O]
+                /      |       \
+        [O][X][X]   [O][X][X]  [O][X][X]
+        [O][X][ ]   [O][ ][X]  [O][ ][ ]
+        [ ][X][O]   [ ][O][O]  [X][X][O]
+                       / \             |    \
+              [O][X][X] [O][X][X]  [O][X][X] [O][X][X]
+              [O][ ][X] [O][O][X]  [O][O][ ] [O][ ][O]
+              [O][X][O] [ ][X][O]  [ ][X][O] [ ][X][O]
+                                                 |      \
+                                             [O][X][X]  ...
+                                             [O][X][O]
+                                             [ ][X][O] 
+
 
 ---
 ## Análisis de complejidad temporal del algoritmo
@@ -255,11 +268,10 @@ aumentando aún más la velocidad del algoritmo.
 
 ---
 ## Conclusión
-Este código permite simular un juego de Gato con un jugador humano y una IA basada 
+Este código permite simular un juego de Gato con un jugador humano contra otro jugador o una IA basada 
 en el algoritmo Minimax. La IA toma decisiones óptimas al evaluar todos los 
-posibles movimientos y garantizar la victoria o minimizar la derrota. 
-El código proporciona una buena base para la simulación de juegos y la 
-implementación de algoritmos de búsqueda en árboles.
+posibles movimientos y garantizar la victoria o minimizar la derrota, que en este caso resulta en un empate. 
+
 
 ---
 ## Instalación y Uso
